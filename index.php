@@ -14,12 +14,39 @@ $db = new db();
 $sql_faktura = "SELECT * FROM faktura WHERE id = $id";
 $res_faktura = $db->select_query($sql_faktura);
 $row = $res_faktura->fetch();//All();
+
+if(empty($row)){
+    exit("Finns ingen faktura " . $id);
+}
+
+
 $id = $row["id"];
 $nummer = $row["nr"];
 $kund_nr = $row["kund_nr"];
 $datum = $row["datum"];
 $bet_villkor = $row["bet_villkor"];
 $forfallodatum = $row["forfallo_datum"];
+
+//foretag
+$sql_foretag = "SELECT * FROM mitt_foretag WHERE id = $id_user";
+$res_foretag = $db->select_query($sql_foretag);
+$row_foretag = $res_foretag->fetch();
+
+if(empty($row_foretag)){
+    $foretag_namn = $foretag_adress_2 = $foretag_adress_3 = $foretag_tel = $foretag_webbplats = "-";
+    $foretag_bic_swift = $foretag_iban = $foretag_epost = "-";
+}
+else{
+    $foretag_namn = $row_foretag["namn"];
+    $foretag_adress_2 = $row_foretag["adress_2"];
+    $foretag_adress_3 = $row_foretag["adress_3"];
+    $foretag_tel = $row_foretag["telefon"];
+    $foretag_webbplats = $row_foretag["webbplats"];
+    $foretag_bic_swift = $row_foretag["bic/swift"];
+    $foretag_iban = $row_foretag["iban"];
+    $foretag_epost = $row_foretag["epost"];
+    //$foretag_namn = $row_foretag[""]
+}
 
 
 //bet.villkor
@@ -79,7 +106,7 @@ $kund_adress3 = $row3["postort"];
 <header>
 <div class="title structure header">
 <div>
-<h1 class="company_name">Firma Valter Ekholm</h1>
+<h1 class="company_name"><?=$foretag_namn?></h1>
 </div>
 <div>
 <h2>Faktura</h2>
@@ -258,19 +285,8 @@ $avrundning *= -1;
 
 <footer>
 <?php
-//foretag
-$sql_foretag = "SELECT * FROM mitt_foretag WHERE id = $id_user";
-$res_foretag = $db->select_query($sql_foretag);
-$row_foretag = $res_foretag->fetch();
-$foretag_namn = $row_foretag["namn"];
-$foretag_adress_2 = $row_foretag["adress_2"];
-$foretag_adress_3 = $row_foretag["adress_3"];
-$foretag_tel = $row_foretag["telefon"];
-$foretag_webbplats = $row_foretag["webbplats"];
-$foretag_bic_swift = $row_foretag["bic/swift"];
-$foretag_iban = $row_foretag["iban"];
-$foretag_epost = $row_foretag["epost"];
-//$foretag_namn = $row_foretag[""]
+
+
 ?>
 <div class="container container-thin">
 <div class="structure">
