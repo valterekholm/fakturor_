@@ -39,7 +39,7 @@ $kund_adress2 = $row3["postnummer"];
 $kund_adress3 = $row3["postort"];
 ?>
 <html>
-<!--Layout från fakturan.nu-->
+<!--html från fakturan.nu-->
     <head>
         
 <style>
